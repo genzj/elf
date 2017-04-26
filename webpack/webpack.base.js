@@ -43,6 +43,23 @@ const baseConfig = {
     }, {
       test: /\.html$/,
       use: ['html-loader']
+    }, {
+        // Skip any files outside of your project's `src` directory
+        include: /src/,
+        exclude: /node_modules/,
+
+        // Only run `.js` and `.jsx` files through Babel
+        test: /\.jsx?$/,
+
+        use: [{
+          loader: "babel-loader",
+
+          // Options to configure babel with
+          options: {
+            plugins: ['babel-plugin-transform-runtime'].map(require.resolve),
+            presets: ['babel-preset-es2015', 'babel-preset-stage-0'].map(require.resolve),
+          }
+        }]
     }]
   },
   plugins: getPlugins(config),
